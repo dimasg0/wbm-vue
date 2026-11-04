@@ -1,0 +1,49 @@
+/* Единая типографика. Подключается ПОСЛЕ style.css и hero-scene.css.
+   Шкала: 14px — весь текст, ссылки, кнопки, поля; 12px — мелкие подписи (метки, теги);
+   22px — заголовки карточек. Заголовки h1/h2 остаются адаптивными (clamp) из style.css. */
+:root{
+  --fs-text:14px;
+  --fs-small:12px;
+  --fs-h3:22px;
+  --lh-text:1.7;
+  --ff-head:Manrope,"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --ff-body:"DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+/* базовый шрифт и межстрочный интервал */
+body{font-family:var(--ff-body);font-size:var(--fs-text);line-height:var(--lh-text)}
+button,input,select,textarea{font-family:var(--ff-body)}
+
+/* заголовочный шрифт с нормальным запасным вариантом (раньше fallback был serif) */
+.brand,.brand-mark,.hero h1,.hero-bottom strong,.trust-item,.section-top h2,.about-copy h2,
+.contact-copy h2,.stat b,.service-body h3,.step h3,.form h3{font-family:var(--ff-head)}
+.brand small{font-family:var(--ff-body)}
+
+/* 14px: текст, ссылки, кнопки, поля, списки */
+.navlinks,.pill,.hero-cta,.photo-note,.service-list li,.service-list li:before,
+.contact-info b,.contact-info span,.field input,.field textarea,.field select,
+.submit,#formMsg,.footer-col a,.footer-col b,.trust-item{font-size:var(--fs-text)}
+.hero-copy>p,.section-top>p,.about-copy p,.contact-copy>p,.form>p,.step p,
+.footer-brand p,.service-body>p{font-size:var(--fs-text);line-height:var(--lh-text)}
+.service-list li{line-height:1.5}
+.service-body>p{min-height:48px}
+.footer-col a{margin:8px 0}
+
+/* 12px: мелкие подписи, метки, теги */
+.eyebrow,.hero-bottom small,.trust-label,.stat span,.service-no,.step-no,
+.field label,.form-foot small,.footer-bottom{font-size:var(--fs-small)}
+.brand small{font-size:10px}
+
+/* заголовки третьего уровня — один размер */
+.service-body h3,.step h3,.form h3{font-size:var(--fs-h3)}
+.hero-bottom strong{font-size:var(--fs-text)}
+
+/* мобильные правила из style.css перебивали шкалу — возвращаем */
+@media(max-width:560px){
+  .nav-actions .pill{font-size:var(--fs-text)}
+  .hero-copy>p{font-size:var(--fs-text);max-width:320px}
+  .hero-bottom strong{font-size:var(--fs-text)}
+  .trust-item{font-size:var(--fs-text)}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:6px}
+  .hero-scene{bottom:78px}
+}
