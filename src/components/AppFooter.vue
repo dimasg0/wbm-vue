@@ -26,7 +26,7 @@
       </div>
       <div class="footer-bottom">
         <span>© 2026 WBM – Waldemar Bohr Mobil. Alle Rechte vorbehalten.</span>
-        <span>Impressum &nbsp; · &nbsp; Datenschutz</span>
+        <!-- <span :key="impressum">Impressum &nbsp; · &nbsp; Datenschutz</span> -->
       </div>
     </div>
   </footer>
