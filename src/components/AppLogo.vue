@@ -16,22 +16,22 @@
 
 .logo-mark {
   font-family: var(--ff-head);
-  font-weight: 800;
-  font-size: 38px;
-  letter-spacing: -0.06em;
+  font-weight: 700;
+  font-size: 40px;
+  letter-spacing: -0.01em;
 }
 
-.w { color: var(--navy); }
-.b { color: var(--blue); }
+.w,
+.b { color: var(--navy); }
 .m { color: var(--accent); }
 
 .logo-sub {
-  margin-top: 6px;
+  margin-top: 7px;
   font-family: var(--ff-body);
-  font-weight: 700;
-  font-size: 9px;
-  letter-spacing: 0.22em;
+  font-weight: 600;
+  font-size: 10px;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--navy);
+  color: var(--muted);
 }
 </style>
