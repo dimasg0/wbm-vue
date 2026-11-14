@@ -1,26 +1,30 @@
 <script setup>
-import AppLogo from './AppLogo.vue'
+import logo from '../assets/Logo.png'
 </script>
 
 <template>
   <header>
     <div class="wrap">
       <nav class="nav">
-        <a class="brand" href="#start">
-          <AppLogo />
-        </a>
+        <RouterLink class="brand" to="/">
+          <!-- <img :src="logo" alt="WBM – Waldemar Bohr Mobil" class="brand-logo"> -->
+        </RouterLink>
 
-        <div class="navlinks">
-          <a href="#leistungen">Leistungen</a>
-          <a href="#unternehmen">Über uns</a>
-          <a href="#ablauf">So arbeiten wir</a>
-          <a href="#kontakt">Kontakt</a>
-        </div>
-
+        <RouterLink :to="{ path: '/', hash: '#leistungen' }">Leistungen</RouterLink>
+        <RouterLink to="/fuhrpark">Fuhrpark</RouterLink>
+        <RouterLink to="/arbeiten">Arbeiten</RouterLink>
+        <RouterLink to="/kontakt">Kontakt</RouterLink>
         <div class="nav-actions">
-          <a class="pill" href="#kontakt">Kontakt aufnehmen</a>
+          <RouterLink class="pill" :to="{ path: '/', hash: '#kontakt' }">Kontakt aufnehmen</RouterLink>
         </div>
       </nav>
     </div>
   </header>
 </template>
+
+<style scoped>
+.brand-logo {
+  height: 56px;
+  width: auto;
+}
+</style>

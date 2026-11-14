@@ -95,3 +95,21 @@
     background: linear-gradient(180deg, rgba(243, 246, 251, .9) 0%, rgba(243, 246, 251, .5) 50%, rgba(243, 246, 251, 0) 62%)
   }
 }
+
+@media (min-width: 851px) {
+  .hero-content {
+    padding-left: clamp(32px, 5vw, 65px);
+  }
+
+  .hero-copy {
+    max-width: min(530px, 44%);
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 4.6vw, 60px);
+  }
+
+  .hero-scene {
+    width: 58%;
+  }
+}
