@@ -1,115 +1,578 @@
-/* Hero: вместо фото — 3D-сцена. Подключается ПОСЛЕ style.css */
-.hero-frame {
-  background: linear-gradient(135deg, #f4f8fd 0%, #e3ecf7 55%, #d4e2f2 100%)
+/* Premium hero without toy-like 3D.
+   This file now styles the new WBM hero scene. */
+
+.wbm-hero {
+  padding: 8px 0 0;
 }
 
-.hero-bg {
+.wbm-hero .wbm-stage {
+  position: relative;
+  min-height: 690px;
+  height: min(800px, calc(100vh - 40px));
+  border-radius: 28px;
+  overflow: hidden;
+  background:
+    linear-gradient(115deg, #08172b 0%, #0c2238 48%, #102843 100%);
+  box-shadow: 0 34px 90px rgba(8, 19, 34, 0.12);
+}
+
+.wbm-hero .hero-frame::after {
+  content: none;
+}
+
+.wbm-hero .wbm-hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(360px, 0.92fr) minmax(420px, 1.08fr);
+  align-items: center;
+  gap: 20px;
+  height: 100%;
+  min-height: 690px;
+  padding: 54px clamp(28px, 4vw, 48px) 92px;
+}
+
+/* LEFT SIDE */
+
+.wbm-hero .wbm-copy {
+  position: relative;
+  z-index: 3;
+  max-width: 560px;
+  padding-left: clamp(12px, 2vw, 38px);
+}
+
+.wbm-hero .wbm-copy h1 {
+  margin: 0 0 24px;
+  max-width: 650px;
+  font-family: Vollkorn, Georgia, "Times New Roman", serif;
+  font-weight: 500;
+  font-size: clamp(52px, 6vw, 86px);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  color: #f5f1e9;
+  text-wrap: balance;
+}
+
+.wbm-hero .wbm-copy > p {
+  margin: 0 0 28px;
+  max-width: 440px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.75;
+  color: #b9c5d1;
+}
+
+.wbm-hero .wbm-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.wbm-hero .wbm-primary-action,
+.wbm-hero .wbm-secondary-action {
+  min-height: 49px;
+  padding: 0 22px;
+  border-radius: 5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  transition: transform .22s ease, background .22s ease, border-color .22s ease;
+}
+
+.wbm-hero .wbm-primary-action {
+  background: #be2838;
+  color: #fff;
+}
+
+.wbm-hero .wbm-primary-action:hover {
+  background: #d33142;
+  transform: translateY(-2px);
+}
+
+.wbm-hero .wbm-secondary-action {
+  border: 1px solid rgba(240, 244, 248, 0.26);
+  color: #f2efe8;
+  background: transparent;
+}
+
+.wbm-hero .wbm-secondary-action:hover {
+  border-color: rgba(240, 244, 248, 0.62);
+  transform: translateY(-2px);
+}
+
+.wbm-hero .wbm-facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.wbm-hero .wbm-facts li {
+  padding: 8px 12px;
+  border: 1px solid rgba(242, 245, 248, 0.12);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  color: #c8d2dc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* RIGHT SIDE */
+
+.wbm-hero .wbm-visual {
+  position: relative;
+  height: 100%;
+  min-height: 540px;
+}
+
+.wbm-hero .wbm-atmosphere {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
-  filter: none;
-  background: radial-gradient(55% 70% at 72% 55%, rgba(255, 255, 255, .95), rgba(255, 255, 255, 0) 70%), radial-gradient(40% 50% at 95% 5%, rgba(45, 102, 163, .14), transparent 70%)
+  background:
+    radial-gradient(50% 44% at 70% 28%, rgba(255, 236, 214, 0.16), transparent 70%),
+    radial-gradient(38% 30% at 56% 63%, rgba(255, 255, 255, 0.07), transparent 78%);
+  opacity: 1;
 }
 
-.hero-scene {
+/* Architecture */
+
+.wbm-hero .wbm-building {
   position: absolute;
-  z-index: 1;
-  top: 76px;
-  bottom: 70px;
-  right: 0;
-  width: 64%
+  right: -6px;
+  bottom: 120px;
+  width: min(520px, 73%);
+  height: 390px;
 }
 
-.hero-scene canvas {
+.wbm-hero .wbm-roofline {
+  position: absolute;
+  top: 18px;
+  left: 90px;
+  right: -8px;
+  height: 28px;
+  background: linear-gradient(180deg, #d6d2ca 0%, #c7c1b7 100%);
+  transform: skewX(-14deg);
+  transform-origin: left center;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+}
+
+.wbm-hero .wbm-facade {
+  position: absolute;
+  inset: 34px 0 0 102px;
+  background: linear-gradient(180deg, #f4f1eb 0%, #e9e4da 100%);
+  border-radius: 2px 0 0 0;
+  box-shadow:
+    -30px 30px 40px rgba(4, 12, 20, 0.08),
+    inset 0 0 0 1px rgba(17, 24, 32, 0.03);
+}
+
+.wbm-hero .wbm-portal {
+  position: absolute;
+  left: 138px;
+  top: 88px;
+  width: 160px;
+  height: 196px;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      #d6d6d3 0 18px,
+      #d1d1cf 18px 19px
+    );
+  box-shadow: inset 0 0 0 1px rgba(40, 49, 58, 0.05);
+}
+
+.wbm-hero .wbm-portal-frame {
+  position: absolute;
+  left: 126px;
+  top: 76px;
+  width: 184px;
+  height: 220px;
+  border: 8px solid #9db2c6;
+  box-sizing: border-box;
+}
+
+.wbm-hero .wbm-window {
+  position: absolute;
+  right: 50px;
+  top: 104px;
+  width: 118px;
+  height: 128px;
+  background:
+    linear-gradient(180deg, rgba(185, 206, 223, 0.92) 0%, rgba(142, 174, 198, 0.92) 100%);
+  box-shadow: inset 0 0 0 2px rgba(112, 136, 157, 0.75);
+}
+
+.wbm-hero .wbm-window::before,
+.wbm-hero .wbm-window::after {
+  content: "";
+  position: absolute;
+  background: rgba(112, 136, 157, 0.78);
+}
+
+.wbm-hero .wbm-window::before {
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.wbm-hero .wbm-window::after {
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+.wbm-hero .wbm-window-glow {
+  position: absolute;
+  right: 73px;
+  top: 142px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 245, 220, 0.9);
+  box-shadow: 0 0 18px rgba(255, 245, 220, 0.8);
+}
+
+.wbm-hero .wbm-step {
+  position: absolute;
+  left: 88px;
+  right: -18px;
+  bottom: -12px;
+  height: 34px;
+  background: linear-gradient(180deg, #eee9df 0%, #e0dbd0 100%);
+  clip-path: polygon(4% 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* Ground */
+
+.wbm-hero .wbm-ground {
+  position: absolute;
+  left: 20px;
+  right: 14px;
+  bottom: 84px;
+  height: 180px;
+  background:
+    linear-gradient(180deg, #24384b 0%, #192c3d 100%);
+  clip-path: polygon(10% 18%, 100% 0, 100% 100%, 0 100%);
+}
+
+.wbm-hero .wbm-ground-line {
+  position: absolute;
+  left: 96px;
+  right: 72px;
+  bottom: 186px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+  transform: skewX(-32deg);
+  transform-origin: left center;
+}
+
+/* Van */
+
+.wbm-hero .wbm-van-wrap {
+  position: absolute;
+  left: 24px;
+  right: 150px;
+  bottom: 120px;
+  z-index: 3;
+  animation: wbmVanFloat 7.2s ease-in-out infinite;
+}
+
+.wbm-hero .wbm-van-wrap img {
   display: block;
   width: 100%;
-  height: 100%;
-  pointer-events: none
+  max-width: 620px;
+  height: auto;
+  filter: drop-shadow(0 26px 26px rgba(7, 14, 22, 0.32));
 }
 
-.hero-frame:after {
-  z-index: 1;
-  background: linear-gradient(90deg, rgba(243, 246, 251, .92) 0%, rgba(243, 246, 251, .6) 28%, rgba(243, 246, 251, 0) 42%)
+.wbm-hero .wbm-van-shadow {
+  position: absolute;
+  left: 112px;
+  bottom: 112px;
+  width: 320px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(3, 8, 14, 0.32);
+  filter: blur(18px);
+  animation: wbmShadowPulse 7.2s ease-in-out infinite;
 }
 
-.hero-bottom {
-  color: var(--navy)
+/* Bottom line */
+
+.wbm-hero .wbm-hero-bottom {
+  position: absolute;
+  left: clamp(26px, 4vw, 48px);
+  right: clamp(26px, 4vw, 48px);
+  bottom: 24px;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  color: #9dadbc;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.035em;
 }
 
-.hero-bottom small {
-  color: #637184
-}
+/* Animations */
 
-.hero-cta+.hero-cta {
-  margin-left: 8px
-}
-
-@media(max-width:1100px) {
-  .hero-scene {
-    width: 58%
+@keyframes wbmVanFloat {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -5px, 0);
   }
 }
 
-@media(max-width:850px) {
+@keyframes wbmShadowPulse {
+  0%, 100% {
+    transform: scaleX(1);
+    opacity: 0.28;
+  }
+  50% {
+    transform: scaleX(0.97);
+    opacity: 0.22;
+  }
+}
 
-  .hero-frame,
-  .hero-content {
-    min-height: 760px
+/* Tablet */
+
+@media (max-width: 1180px) {
+  .wbm-hero .wbm-copy h1 {
+    font-size: clamp(48px, 5.6vw, 74px);
   }
 
-  .hero-frame {
-    height: 760px
+  .wbm-hero .wbm-building {
+    width: min(500px, 76%);
   }
 
-  .hero-scene {
-    top: auto;
+  .wbm-hero .wbm-van-wrap {
+    right: 92px;
+  }
+}
+
+@media (max-width: 980px) {
+  .wbm-hero .wbm-stage {
+    min-height: 820px;
+    height: auto;
+  }
+
+  .wbm-hero .wbm-hero-grid {
+    grid-template-columns: 1fr;
+    align-items: start;
+    min-height: 820px;
+    padding-top: 46px;
+    gap: 10px;
+  }
+
+  .wbm-hero .wbm-copy {
+    max-width: 100%;
+    padding-left: 4px;
+  }
+
+  .wbm-hero .wbm-copy h1 {
+    max-width: 720px;
+  }
+
+  .wbm-hero .wbm-visual {
+    min-height: 400px;
+    margin-top: 10px;
+  }
+
+  .wbm-hero .wbm-building {
+    right: 12px;
+    bottom: 96px;
+    width: min(540px, 70%);
+    height: 340px;
+  }
+
+  .wbm-hero .wbm-ground {
     left: 0;
-    width: 100%;
-    height: 46%;
-    bottom: 56px
+    right: 0;
+    bottom: 72px;
   }
 
-  .hero-frame:after {
-    background: linear-gradient(180deg, rgba(243, 246, 251, .9) 0%, rgba(243, 246, 251, .5) 50%, rgba(243, 246, 251, 0) 62%)
-  }
-}
-
-@media(max-width:560px) {
-
-  .hero-frame,
-  .hero-content {
-    min-height: 800px
+  .wbm-hero .wbm-ground-line {
+    left: 86px;
+    right: 44px;
+    bottom: 160px;
   }
 
-  .hero-frame {
-    height: 800px
+  .wbm-hero .wbm-van-wrap {
+    left: 8px;
+    right: 140px;
+    bottom: 102px;
   }
 
-  .hero-scene {
-    height: 44%;
-    bottom: 50px
+  .wbm-hero .wbm-van-shadow {
+    left: 84px;
+    bottom: 94px;
   }
 
-  .hero-frame:after {
-    background: linear-gradient(180deg, rgba(243, 246, 251, .9) 0%, rgba(243, 246, 251, .5) 50%, rgba(243, 246, 251, 0) 62%)
+  .wbm-hero .wbm-hero-bottom {
+    font-size: 10px;
   }
 }
 
-@media (min-width: 851px) {
-  .hero-content {
-    padding-left: clamp(32px, 5vw, 65px);
+/* Mobile */
+
+@media (max-width: 640px) {
+  .wbm-hero {
+    padding-top: 2px;
   }
 
-  .hero-copy {
-    max-width: min(530px, 44%);
+  .wbm-hero .wbm-stage {
+    min-height: 760px;
+    border-radius: 20px;
   }
 
-  .hero h1 {
-    font-size: clamp(38px, 4.6vw, 60px);
+  .wbm-hero .wbm-hero-grid {
+    min-height: 760px;
+    padding: 34px 22px 90px;
+    gap: 0;
   }
 
-  .hero-scene {
-    width: 58%;
+  .wbm-hero .wbm-copy h1 {
+    font-size: clamp(40px, 12vw, 56px);
+    line-height: 0.98;
+    margin-bottom: 18px;
+  }
+
+  .wbm-hero .wbm-copy > p {
+    font-size: 13px;
+    line-height: 1.65;
+    margin-bottom: 22px;
+    max-width: 340px;
+  }
+
+  .wbm-hero .wbm-primary-action,
+  .wbm-hero .wbm-secondary-action {
+    min-height: 45px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  .wbm-hero .wbm-facts {
+    gap: 8px;
+  }
+
+  .wbm-hero .wbm-facts li {
+    font-size: 10px;
+    padding: 7px 10px;
+  }
+
+  .wbm-hero .wbm-visual {
+    min-height: 320px;
+    margin-top: 8px;
+  }
+
+  .wbm-hero .wbm-building {
+    right: -32px;
+    bottom: 92px;
+    width: 78%;
+    height: 250px;
+  }
+
+  .wbm-hero .wbm-roofline {
+    left: 54px;
+    height: 20px;
+  }
+
+  .wbm-hero .wbm-facade {
+    inset: 24px 0 0 62px;
+  }
+
+  .wbm-hero .wbm-portal {
+    left: 84px;
+    top: 56px;
+    width: 108px;
+    height: 134px;
+  }
+
+  .wbm-hero .wbm-portal-frame {
+    left: 76px;
+    top: 48px;
+    width: 124px;
+    height: 150px;
+    border-width: 6px;
+  }
+
+  .wbm-hero .wbm-window {
+    right: 32px;
+    top: 72px;
+    width: 76px;
+    height: 86px;
+  }
+
+  .wbm-hero .wbm-window-glow {
+    right: 48px;
+    top: 102px;
+  }
+
+  .wbm-hero .wbm-step {
+    left: 44px;
+    right: -16px;
+    height: 22px;
+  }
+
+  .wbm-hero .wbm-ground {
+    height: 126px;
+    bottom: 80px;
+  }
+
+  .wbm-hero .wbm-ground-line {
+    left: 42px;
+    right: 20px;
+    bottom: 136px;
+  }
+
+  .wbm-hero .wbm-van-wrap {
+    left: -4px;
+    right: 64px;
+    bottom: 100px;
+  }
+
+  .wbm-hero .wbm-van-shadow {
+    left: 34px;
+    bottom: 93px;
+    width: 220px;
+    height: 28px;
+  }
+
+  .wbm-hero .wbm-hero-bottom {
+    left: 22px;
+    right: 22px;
+    bottom: 18px;
+    padding-top: 14px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 9px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wbm-hero .wbm-van-wrap,
+  .wbm-hero .wbm-van-shadow,
+  .wbm-hero .wbm-primary-action,
+  .wbm-hero .wbm-secondary-action {
+    animation: none !important;
+    transition: none !important;
   }
 }
