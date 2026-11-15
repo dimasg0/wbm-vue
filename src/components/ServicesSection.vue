@@ -1,216 +1,187 @@
+
 <script setup>
-import { services } from '../data/services.js'
-import PhotoSlot from './PhotoSlot.vue'
+import { RouterLink } from 'vue-router'
+import NotchedServiceCard from './ui/NotchedServiceCard.vue'
+
+// Временные данные только для тестирования дизайна
+const placeholderImages = [
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85',
+  'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=1000&q=85',
+]
+
+const services = Array.from({ length: 6 }, (_, index) => {
+  const number = String(index + 1).padStart(2, '0')
+
+  return {
+    slug: `beispiel-${number}`,
+    preview: true,
+    label: `${number} / BEISPIEL`,
+    title: `Beispielkarte ${number}`,
+    text: 'Dies ist ein kurzer Beispieltext für die Darstellung der Karte. Er dient dazu, das Layout, die Abstände und die Typografie besser beurteilen zu können.',
+    image: placeholderImages[index],
+    alt: `Beispielbild ${number}`,
+    items: [
+      'Kategorie Eins',
+      'Kategorie Zwei',
+      'Kategorie Drei',
+    ],
+  }
+})
 </script>
 
 <template>
   <section class="svc" id="leistungen">
     <div class="wrap">
+
       <div class="svc__head">
-        <div>
-          <span class="svc__kicker">Unser Leistungsangebot</span>
-          <h2>Alles aus einer Hand.<br>Genau so, wie Sie es brauchen.</h2>
+        <div class="svc__heading">
+          <span class="svc__kicker">
+            Unser Leistungsangebot
+          </span>
+
+          <h2>
+            Alles aus einer Hand.<br />
+            Genau so, wie Sie es brauchen.
+          </h2>
         </div>
+
         <p>
-          Von der ersten Kiste bis zur letzten Fahrt: Wählen Sie einzelne Leistungen oder kombinieren Sie mehrere
-          Services zu einem passenden Gesamtpaket.
+          Von der ersten Kiste bis zur letzten Fahrt:
+          Wählen Sie einzelne Leistungen oder
+          kombinieren Sie mehrere Services zu einem
+          passenden Gesamtpaket.
         </p>
       </div>
 
       <div class="svc__grid">
-        <RouterLink
-          class="svc__card"
-          v-for="(service, i) in services"
-          :key="i"
-          :to="'/' + service.slug"
+        <div
+          v-for="service in services"
+          :key="service.slug"
+          class="svc__item"
         >
-          <div class="svc__photo">
-            <PhotoSlot :src="service.photo" :alt="service.alt" :label="service.title" />
-          </div>
-          <div class="svc__body">
-            <h3>{{ service.title }}</h3>
-            <p>{{ service.text }}</p>
-            <ul>
-              <li v-for="item in service.items" :key="item">{{ item }}</li>
-            </ul>
-            <span class="svc__more">Mehr erfahren</span>
-          </div>
-        </RouterLink>
+          <NotchedServiceCard
+            :service="service"
+            :wide="false"
+            :monochrome="true"
+            surface="#ffffff"
+            accent="#c82333"
+          />
+        </div>
       </div>
+
     </div>
   </section>
 </template>
 
 <style scoped>
 .svc {
-  padding: 96px 0 104px;
-  background: #fff;
+  padding: 105px 0 120px;
+  background: #ffffff;
 }
 
 .svc__head {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 40px;
-  margin-bottom: 48px;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+
+.svc__heading {
+  min-width: 0;
 }
 
 .svc__kicker {
   display: flex;
   align-items: center;
   gap: 12px;
+  color: var(--muted);
   font-size: 13px;
   font-weight: 600;
-  letter-spacing: 0.12em;
+  letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--muted);
 }
 
 .svc__kicker::before {
   content: "";
   width: 32px;
   height: 1px;
+  flex-shrink: 0;
   background: var(--accent);
 }
 
 .svc h2 {
-  max-width: 640px;
+  max-width: 730px;
   margin: 18px 0 0;
-  font-size: clamp(34px, 4.2vw, 54px);
+  color: var(--navy);
+  font-family: var(--ff-head, Georgia, serif);
+  font-size: clamp(35px, 4.2vw, 56px);
   font-weight: 700;
   line-height: 1.1;
-  letter-spacing: -0.02em;
-  color: var(--navy);
+  letter-spacing: -.025em;
 }
 
 .svc__head > p {
-  max-width: 380px;
-  margin: 0;
-  font-size: 17px;
-  line-height: 1.6;
+  max-width: 345px;
+  flex: 0 1 345px;
+  margin: 0 0 4px;
   color: var(--muted);
+  font-size: 17px;
+  line-height: 1.65;
 }
 
-/* сетка на 12 колонок: первые две карточки крупные, остальные по 3 колонки */
+/* 6 одинаковых карточек, 3 колонки */
 .svc__grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: 26px;
+  row-gap: 55px;
+  align-items: stretch;
 }
 
-.svc__card {
-  grid-column: span 3;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  background: var(--bg);
-  border: 1px solid var(--line);
-  border-radius: 12px;
-  transition: transform 0.25s, box-shadow 0.25s;
+.svc__item {
+  min-width: 0;
 }
 
-.svc__card:nth-child(-n + 2) {
-  grid-column: span 6;
-}
-
-.svc__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 18px 40px rgba(22, 34, 56, 0.12);
-}
-
-.svc__photo {
-  aspect-ratio: 4 / 3;
-}
-
-.svc__card:nth-child(-n + 2) .svc__photo {
-  aspect-ratio: 16 / 9;
-}
-
-.svc__body {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 24px 24px 22px;
-}
-
-.svc__body h3 {
-  margin: 0 0 8px;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.01em;
-  color: var(--navy);
-}
-
-.svc__body p {
-  margin: 0 0 16px;
-  font-size: 16px;
-  line-height: 1.55;
-  color: var(--muted);
-}
-
-.svc__body ul {
-  margin: 0 0 20px;
-  padding: 0;
-  list-style: none;
-}
-
-.svc__body li {
-  position: relative;
-  padding: 4px 0 4px 18px;
-  font-size: 15px;
-  line-height: 1.45;
-  color: var(--ink);
-}
-
-.svc__body li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0.8em;
-  width: 7px;
-  height: 7px;
-  background: var(--accent);
-  border-radius: 1px;
-}
-
-.svc__more {
-  margin-top: auto;
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--navy);
-  text-decoration: underline;
-  text-decoration-color: var(--accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 5px;
-}
-
-@media (max-width: 1000px) {
-  .svc__card,
-  .svc__card:nth-child(-n + 2) {
-    grid-column: span 6;
-  }
-
-  .svc__card:nth-child(-n + 2) .svc__photo {
-    aspect-ratio: 4 / 3;
+/* Планшеты: 2 колонки */
+@media (max-width: 1020px) {
+  .svc__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 22px;
+    row-gap: 42px;
   }
 }
 
+/* Телефоны: 1 колонка */
 @media (max-width: 700px) {
   .svc {
-    padding: 72px 0 80px;
+    padding: 75px 0 88px;
   }
 
   .svc__head {
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
+    margin-bottom: 35px;
   }
 
-  .svc__card,
-  .svc__card:nth-child(-n + 2) {
-    grid-column: 1 / -1;
+  .svc h2 {
+    font-size: clamp(32px, 8vw, 43px);
+  }
+
+  .svc__head > p {
+    flex: auto;
+    max-width: 100%;
+    font-size: 16px;
+  }
+
+  .svc__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 40px;
   }
 }
 </style>

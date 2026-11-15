@@ -89,11 +89,11 @@ async function sendForm(event) {
         </div>
 
         <div class="form-foot">
-          <small>
+          <!-- <small>
             Mit dem Absenden stimmen Sie der Verarbeitung Ihrer Angaben zur Bearbeitung
             Ihrer Anfrage zu.
-          </small>
-          <button class="submit" type="submit">Anfrage senden ↗</button>
+          </small> -->
+          <button class="submit" type="submit">Anfrage senden</button>
         </div>
 
         <p id="formStatus" role="status">{{ status }}</p>

@@ -1,11 +1,11 @@
 <script setup>
 import PhotoSlot from './PhotoSlot.vue'
-import DyeWhorl from './DyeWhorl.vue'
+//import DyeWhorl from './DyeWhorl.vue'
 </script>
 
 <template>
   <section class="wbm-hero">
-    <DyeWhorl :density="0.8">
+    <!-- <DyeWhorl :density="0.8"> -->
       <div class="wbm-hero__veil"></div>
 
       <div class="wrap wbm-hero__grid">
@@ -30,7 +30,7 @@ import DyeWhorl from './DyeWhorl.vue'
           <figcaption>Unser Transporter bis 3,5 t zGG</figcaption>
         </figure>
       </div>
-    </DyeWhorl>
+    <!-- </DyeWhorl> -->
   </section>
 </template>
 

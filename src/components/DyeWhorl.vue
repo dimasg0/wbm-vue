@@ -564,6 +564,7 @@ class Solver {
 import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
 
 const props = defineProps({
+  viewport: { type: Boolean, default: false },
   // overall simulation rate
   speed: { type: Number, default: 1 },
   // ink injected per second by the ambient sources, 0..2
@@ -661,6 +662,9 @@ onMounted(() => {
   const readColors = () => {
     const cs = getComputedStyle(wrap)
     const bg = parseHex(cs.getPropertyValue('--bg')) || [0.96, 0.97, 0.98]
+    const navy = parseHex(
+  cs.getPropertyValue('--wave-color')
+) || [0.35, 0.49, 0.65]
     const fg = parseHex(cs.getPropertyValue('--ink')) || [0.09, 0.13, 0.22]
     const muted = parseHex(cs.getPropertyValue('--muted')) || [0.35, 0.4, 0.46]
     const border = parseHex(cs.getPropertyValue('--line')) || [0.18, 0.18, 0.18]
@@ -679,17 +683,31 @@ onMounted(() => {
       rim = 2.6
       inkK = 2.5
     } else {
-      // dark ink in pale fluid
-      c0 = bg
-      c1 = mixRGB(bg, muted, 0.3)
-      c2 = mixRGB(muted, bg, 0.22)
-      c3 = mixRGB(fg, muted, 0.24)
-      c4 = mixRGB(fg, black, 0.55)
-      accent = mixRGB(accent, bg, 0.5)
-      gamma = 1.18
-      rim = 2.2
-      inkK = 2.9
-    }
+  // Мягкие сине-серые волны под стиль WBM
+
+  // const navy = parseHex(
+  //   cs.getPropertyValue('--navy')
+  // ) || [0.086, 0.133, 0.22]
+
+//   const navy = parseHex(
+//   cs.getPropertyValue('--wave-color')
+// ) || [0.35, 0.49, 0.65]
+
+  // Пять ступеней цвета
+  c0 = bg
+  c1 = mixRGB(bg, navy, 0.08)
+  c2 = mixRGB(bg, navy, 0.20)
+  c3 = mixRGB(bg, navy, 0.37)
+  c4 = mixRGB(bg, navy, 0.55)
+
+  // Красный акцент становится деликатнее
+  accent = mixRGB(accent, bg, 0.75)
+
+  // Более мягкие границы и контраст
+  gamma = 1.22
+  rim = 1.4
+  inkK = 2.1
+}
   }
   readColors()
 
@@ -1031,28 +1049,70 @@ onMounted(() => {
     canvas.style.height = cssH + 'px'
   }
 
-  const resize = () => {
-    const rect = wrap.getBoundingClientRect()
-    if (rect.width < 2 || rect.height < 2) return
-    const changed =
-      Math.abs(rect.width - cssW) > 0.5 || Math.abs(rect.height - cssH) > 0.5
-    cssW = rect.width
-    cssH = rect.height
-    rectLeft = rect.left
-    rectTop = rect.top
-    rectDirty = false
+  // const resize = () => {
+  //   const rect = wrap.getBoundingClientRect()
+  //   if (rect.width < 2 || rect.height < 2) return
+  //   const changed =
+  //     Math.abs(rect.width - cssW) > 0.5 || Math.abs(rect.height - cssH) > 0.5
+  //   cssW = rect.width
+  //   cssH = rect.height
+  //   rectLeft = rect.left
+  //   rectTop = rect.top
+  //   rectDirty = false
+  //   applyBacking()
+  //   if (changed) {
+  //     tier = 0
+  //     overMs = 0
+  //     underMs = 0
+  //     upWindow = 8000
+  //     frameEma = 16.7
+  //     applyBacking()
+  //     allocate()
+  //   }
+  //   render()
+  // }
+
+
+const resize = () => {
+  const rect = wrap.getBoundingClientRect()
+
+  const width = props.viewport
+    ? window.innerWidth
+    : rect.width
+
+  const height = props.viewport
+    ? window.innerHeight
+    : rect.height
+
+  if (width < 2 || height < 2) return
+
+  const changed =
+    Math.abs(width - cssW) > 0.5 ||
+    Math.abs(height - cssH) > 0.5
+
+  cssW = width
+  cssH = height
+
+  rectLeft = props.viewport ? 0 : rect.left
+  rectTop = props.viewport ? 0 : rect.top
+  rectDirty = false
+
+  applyBacking()
+
+  if (changed) {
+    tier = 0
+    overMs = 0
+    underMs = 0
+    upWindow = 8000
+    frameEma = 16.7
+
     applyBacking()
-    if (changed) {
-      tier = 0
-      overMs = 0
-      underMs = 0
-      upWindow = 8000
-      frameEma = 16.7
-      applyBacking()
-      allocate()
-    }
-    render()
+    allocate()
   }
+
+  render()
+}
+
 
   const applyTier = () => {
     applyBacking()
@@ -1102,16 +1162,38 @@ onMounted(() => {
   }
 
   // ---- pointer events -------------------------------------------------------------
-  const syncRect = () => {
-    if (!rectDirty) return
-    const rect = wrap.getBoundingClientRect()
-    rectLeft = rect.left
-    rectTop = rect.top
+  // const syncRect = () => {
+  //   if (!rectDirty) return
+  //   const rect = wrap.getBoundingClientRect()
+  //   rectLeft = rect.left
+  //   rectTop = rect.top
+  //   rectDirty = false
+  // }
+  // const markRectDirty = () => {
+  //   rectDirty = true
+  // }
+
+
+const syncRect = () => {
+  if (props.viewport) {
+    rectLeft = 0
+    rectTop = 0
     rectDirty = false
+    return
   }
-  const markRectDirty = () => {
-    rectDirty = true
-  }
+
+  if (!rectDirty) return
+
+  const rect = wrap.getBoundingClientRect()
+  rectLeft = rect.left
+  rectTop = rect.top
+  rectDirty = false
+}
+
+const markRectDirty = () => {
+  rectDirty = true
+}
+
 
   const setTarget = (e) => {
     syncRect()
@@ -1204,6 +1286,7 @@ onMounted(() => {
   wrap.addEventListener('pointercancel', onPointerCancel)
   window.addEventListener('scroll', markRectDirty, { passive: true, capture: true })
   window.addEventListener('resize', markRectDirty, { passive: true })
+  window.addEventListener('resize', resize, { passive: true })
 
   const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
   let reduced = mq.matches
@@ -1299,6 +1382,7 @@ onMounted(() => {
     wrap.removeEventListener('pointercancel', onPointerCancel)
     window.removeEventListener('scroll', markRectDirty, { capture: true })
     window.removeEventListener('resize', markRectDirty)
+    window.removeEventListener('resize', resize)
     sleep()
     solver.destroy()
   }
@@ -1317,9 +1401,27 @@ watch(
 )
 </script>
 
-<template>
+<!-- <template>
   <div ref="wrapRef" class="dye-whorl">
     <canvas ref="canvasRef" class="dye-whorl__canvas" aria-hidden="true"></canvas>
+    <div class="dye-whorl__content">
+      <slot />
+    </div>
+  </div>
+</template> -->
+
+<template>
+  <div
+    ref="wrapRef"
+    class="dye-whorl"
+    :class="{ 'dye-whorl--viewport': props.viewport }"
+  >
+    <canvas
+      ref="canvasRef"
+      class="dye-whorl__canvas"
+      aria-hidden="true"
+    ></canvas>
+
     <div class="dye-whorl__content">
       <slot />
     </div>
@@ -1348,4 +1450,26 @@ watch(
   z-index: 1;
   width: 100%;
 }
+
+
+
+/* Режим фона на весь экран */
+
+.dye-whorl--viewport {
+  min-height: 100vh;
+  overflow: visible;
+}
+
+.dye-whorl--viewport .dye-whorl__canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dye-whorl--viewport .dye-whorl__content {
+  position: relative;
+  z-index: 1;
+}
+
 </style>

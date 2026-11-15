@@ -78,6 +78,10 @@ const closeMenu = () => { menuOpen.value = false }
             @click="closeMenu"
           >Leistungen</RouterLink>
 
+          <RouterLink to="/ueber-uns" @click="closeMenu">
+  Über uns
+</RouterLink>
+
           <RouterLink to="/fuhrpark" @click="closeMenu">
             Fuhrpark
           </RouterLink>
