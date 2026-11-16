@@ -11,7 +11,11 @@ import PhotoSlot from './PhotoSlot.vue'
       <div class="wrap wbm-hero__grid">
         <div class="wbm-hero__copy">
           <span class="wbm-hero__kicker">Korntal-Münchingen &amp; Umgebung</span>
-          <h1>Ein neuer Ort.<br><span>Ein gutes Gefühl.</span></h1>
+          <!-- <h1>Ein neuer Ort.<br><span>Ein gutes Gefühl.</span></h1> -->
+
+          <h1> 
+            Wir kümmern uns um Umzug, damit Sie sich auf Ihr neues Zuhause freuen können.
+          </h1>
           <p>
             Ob Umzug, Transport oder Entrümpelung – wir kümmern uns zuverlässig um alles,
             was in Bewegung kommt. Persönlich, sorgfältig und unkompliziert.
